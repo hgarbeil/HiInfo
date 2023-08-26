@@ -16,8 +16,9 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String weatherString, tideString ;
+    private String weatherString, tideString, buoyString ;
     private MyWeather myWeather ;
+    private MyBuoy myBuoy ;
     private MyTide tdn ;
     private WeatherData myWeatherData ;
     private ImageView weather_icon ;
@@ -39,7 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        Handler b_handler = new Handler (Looper.getMainLooper()) {
 
+            @Override
+            public void handleMessage (Message msg) {
+                Bundle bundle = msg.getData();
+                buoyString = bundle.getString("MyWeather");
+//                myWeatherData = new WeatherData(weatherString);
+//                System.out.println(weatherString);
+            }
+        };
         Handler w_handler = new Handler (Looper.getMainLooper()){
             @Override
             public void handleMessage (Message msg){
@@ -64,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
         myWeather.makeURL() ;
         Thread t_weather = new Thread (myWeather) ;
         t_weather.start();
+
+        myBuoy = new MyBuoy(b_handler);
+        myBuoy.makeURL() ;
+        Thread t_buoy = new Thread (myBuoy) ;
+        t_buoy.start();
 
         Handler tide_handler = new Handler (Looper.getMainLooper()){
             @Override
