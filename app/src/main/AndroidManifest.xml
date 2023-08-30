@@ -15,6 +15,9 @@
         android:theme="@style/Theme.HiInfo"
         tools:targetApi="31">
         <activity
+            android:name=".BuoyActivity"
+            android:exported="false" />
+        <activity
             android:name=".TideActivity"
             android:exported="false" />
         <activity

@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private WeatherData myWeatherData ;
     private ImageView weather_icon ;
     private TextView tv_temp, tv_weather, tv_tide_0, tv_tide_1 ;
-    private CardView card_weather, card_tide ;
+    private TextView tv_buoy_0, tv_buoy_1 ;
+    private CardView card_weather, card_tide, card_buoy ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         tv_weather = findViewById(R.id.tv_weather);
         tv_tide_0 = findViewById(R.id.tv_tide_0);
         tv_tide_1 = findViewById(R.id.tv_tide_1);
+        tv_buoy_0 = findViewById(R.id.tv_buoy_0);
+        tv_buoy_1 = findViewById(R.id.tv_buoy_1);
         card_weather = findViewById(R.id.card_weather);
         card_tide = findViewById(R.id.card_tide);
+        card_buoy = findViewById(R.id.card_buoy);
         weatherString ="" ;
         tideString="" ;
 
@@ -45,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleMessage (Message msg) {
                 Bundle bundle = msg.getData();
-                buoyString = bundle.getString("MyWeather");
+                buoyString = bundle.getString("MyBuoy");
+                BuoyData buoyData = new BuoyData(buoyString) ;
+                updateBuoy(buoyData);
+
+
 //                myWeatherData = new WeatherData(weatherString);
 //                System.out.println(weatherString);
             }
@@ -122,6 +130,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        card_buoy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(MainActivity.this, WeatherActivity.class);
+                Intent intent = new Intent(MainActivity.this,BuoyActivity.class);
+                intent.putExtra ("BuoyData", buoyString);
+                startActivity(intent);
+            }
+
+        });
     }
 
     void updateTides (TideData tideData){
@@ -137,6 +155,21 @@ public class MainActivity extends AppCompatActivity {
         tv_tide_1.setText (tidestr);
 
 
+    }
+
+    void updateBuoy (BuoyData buoyData){
+        tv_buoy_0.setText ("Station : "+myBuoy.stationName);
+        String outstring = "Time \tHt DPD  APD DIR\n" ;
+        for (int i=0;i<3; i++){
+//            outstring += String.format ("%3.1f\t\t%3.0f\t%3.0f\t%5.0f\n",
+//                    buoyData.height[i], buoyData.domPeriod, buoyData.avgPeriod, buoyData.dir) ;
+            outstring += String.format("%s\t\t%3.1f\t%3.0f\t%3.0f\t%4.0f\n", buoyData.timeString[i],
+                    buoyData.height[i],
+                    buoyData.domPeriod[i],buoyData.avgPeriod[i],buoyData.dir[i]);
+        }
+        tv_buoy_1.setText(outstring) ;
+
 
     }
+
 }
