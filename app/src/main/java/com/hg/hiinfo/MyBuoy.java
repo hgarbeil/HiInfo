@@ -53,6 +53,7 @@ public class MyBuoy implements Runnable {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line = null;
             Bundle bundle = new Bundle();
+            buffer.append("Station : "+this.index+"\n") ;
             while ((line = br.readLine()) != null)
                 buffer.append(line + "\n");
             is.close();

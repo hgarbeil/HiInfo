@@ -14,6 +14,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private String weatherString, tideString, buoyString ;
@@ -22,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
     private MyTide tdn ;
     private WeatherData myWeatherData ;
     private ImageView weather_icon ;
+    private TextView tv_astro_0, tv_astro_1 ;
     private TextView tv_temp, tv_weather, tv_tide_0, tv_tide_1 ;
     private TextView tv_buoy_0, tv_buoy_1 ;
     private CardView card_weather, card_tide, card_buoy ;
+    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm") ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         weather_icon = findViewById(R.id.weather_icon) ;
         tv_temp = findViewById(R.id.tv_temp);
         tv_weather = findViewById(R.id.tv_weather);
+        tv_astro_0 = findViewById(R.id.tv_astro) ;
+        tv_astro_1 = findViewById(R.id.tv_astro1);
         tv_tide_0 = findViewById(R.id.tv_tide_0);
         tv_tide_1 = findViewById(R.id.tv_tide_1);
         tv_buoy_0 = findViewById(R.id.tv_buoy_0);
@@ -41,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         card_buoy = findViewById(R.id.card_buoy);
         weatherString ="" ;
         tideString="" ;
+
 
 
 
@@ -73,6 +81,13 @@ public class MainActivity extends AppCompatActivity {
                 outstring = String.format("Wind: %dMPH\nWind Dir: %d",
                         Math.round(myWeatherData.cur_wind),Math.round(myWeatherData.cur_windDir));
                 tv_weather.setText(outstring);
+                outstring = String.format ("Sunrise : %s AM\nSunset : %s PM\nMoon Phase : %4.2f",
+                        sdf.format(new Date(myWeatherData.sunrise*1000L)),
+                        sdf.format(new Date(myWeatherData.sunset*1000L)),
+                        myWeatherData.moonphase) ;
+                tv_astro_1.setText(outstring);
+
+                // astro
             }
 
 

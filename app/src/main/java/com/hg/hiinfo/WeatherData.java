@@ -13,8 +13,9 @@ import java.util.Date;
 public class WeatherData implements Runnable {
 
     int ndays ;
+    long sunrise, sunset ;
     double cur_temp, cur_wind, cur_windDir ;
-    double moon_phase ;
+    double moonphase ;
     String cur_desc;
     String cur_icon ;
     Handler handler ;
@@ -40,7 +41,7 @@ public class WeatherData implements Runnable {
 
     public class DailyData {
         Date date ;
-        double min, max, wind_speed, wind_dir ;
+        double min, max, wind_speed, wind_dir, moonphase ;
         String datestring, sunrise, sunset, weather_desc, icon, iconURL;
         public class DailyData90{
 
@@ -66,10 +67,14 @@ public class WeatherData implements Runnable {
         try {
             JSONObject jobj = new JSONObject(jsonString);
             JSONObject jcurr = jobj.getJSONObject("current") ;
+            JSONArray jdaily = jobj.getJSONArray("daily");
+            JSONObject today = jdaily.getJSONObject(0);
             cur_wind = jcurr.getDouble("wind_speed");
             cur_windDir = jcurr.getDouble ("wind_deg");
             cur_temp = jcurr.getDouble("temp");
-
+            sunrise = jcurr.getLong("sunrise");
+            sunset = jcurr.getLong("sunset") ;
+            moonphase = today.getDouble("moon_phase") ;
             JSONArray jarr = jcurr.getJSONArray("weather");
             JSONObject weather = jarr.getJSONObject(0);
             cur_desc = weather.getString("description");

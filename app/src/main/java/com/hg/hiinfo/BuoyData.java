@@ -3,6 +3,7 @@ package com.hg.hiinfo;
 import java.util.StringTokenizer;
 
 public class BuoyData {
+    int stationNum ;
     String timeString[], dayString[] ;
     String buoyString ;
     float height[] ;
@@ -10,6 +11,7 @@ public class BuoyData {
     String stationNames []= {"Barbers Point","Mokapu","Waimea"} ;
 
     BuoyData(String bstring){
+        stationNum = 0 ;
         buoyString = bstring ;
         dir = new float[4] ;
         domPeriod = new float[4] ;
@@ -27,6 +29,9 @@ public class BuoyData {
         String time, valstr, hrtime, mintime ;
         StringTokenizer stok = new StringTokenizer(buoyString, "\n") ;
         String strline = stok.nextToken () ;
+        String lstr = strline.substring(10) ;
+        stationNum = Integer.parseInt(lstr) ;
+        stok.nextToken() ;
         stok.nextToken() ;
         for (int i=0; i<4; i++){
             strline = stok.nextToken() ;
