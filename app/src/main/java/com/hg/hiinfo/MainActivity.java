@@ -19,15 +19,16 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String weatherString, tideString, buoyString ;
+    private String weatherString, tideString, buoyString, surfString ;
     private MyWeather myWeather ;
     private MyBuoy myBuoy ;
     private MyTide tdn ;
+    private MySurf mySurf ;
     private WeatherData myWeatherData ;
     private ImageView weather_icon ;
     private TextView tv_astro_0, tv_astro_1 ;
     private TextView tv_temp, tv_weather, tv_tide_0, tv_tide_1 ;
-    private TextView tv_buoy_0, tv_buoy_1 ;
+    private TextView tv_buoy_0, tv_buoy_1, tv_surf_0 ;
     private CardView card_weather, card_tide, card_buoy ;
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm") ;
     @Override
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         tv_tide_1 = findViewById(R.id.tv_tide_1);
         tv_buoy_0 = findViewById(R.id.tv_buoy_0);
         tv_buoy_1 = findViewById(R.id.tv_buoy_1);
+        tv_surf_0 = findViewById(R.id.tv_surf_0);
         card_weather = findViewById(R.id.card_weather);
         card_tide = findViewById(R.id.card_tide);
         card_buoy = findViewById(R.id.card_buoy);
@@ -50,6 +52,19 @@ public class MainActivity extends AppCompatActivity {
         tideString="" ;
 
 
+        Handler s_handler = new Handler (Looper.getMainLooper()) {
+
+            @Override
+            public void handleMessage (Message msg) {
+                Bundle bundle = msg.getData();
+                surfString = bundle.getString("MySurf");
+                tv_surf_0.setText(surfString);
+            }
+        };
+
+        mySurf = new MySurf(s_handler) ;
+        Thread t_surf = new Thread (mySurf) ;
+        t_surf.start();
 
 
         Handler b_handler = new Handler (Looper.getMainLooper()) {
