@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         String tidestr = new String("");
         for (int i=0; i<4; i++ ){
             tidestr += String.format("%s\t\t%4.1f\t\t%s\n",
-                    tideData.timeArr[i], tideData.values[i],
+                    tideData.timeArr[i].substring(5), tideData.values[i],
                     tideData.typeArr[i]);
 
         }

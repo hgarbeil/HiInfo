@@ -113,7 +113,7 @@ public class TideActivity extends AppCompatActivity implements
             for (int i=0; i<12; i++ ) {
                 if (i < 4) {
                     tidestr += String.format("%s\t\t%4.1f\t\t%s\n",
-                            tideData.timeArr[i], tideData.values[i],
+                            tideData.timeArr[i].substring(5), tideData.values[i],
                             tideData.typeArr[i]);
                 }
                 timeLabels[i] = sdf0.parse(tideData.timeArr[i]);
@@ -167,7 +167,7 @@ public class TideActivity extends AppCompatActivity implements
         String tidestr = new String("");
         for (int i=0; i<4; i++ ){
             tidestr += String.format("%s\t\t%4.1f\t\t%s\n",
-                    tdn.timeArr[i], tdn.values[i],
+                    tdn.timeArr[i].substring(5), tdn.values[i],
                     tdn.typeArr[i]);
 
         }
