@@ -14,8 +14,8 @@ public class MyBuoy implements Runnable {
     int index ;
     String fullURL ;
     Handler handler ;
-    String stationIDs []=  {"51212","51202","51202"} ;
-    String stationNames []= {"Barbers Point","Mokapu","Waimea"} ;
+    String stationIDs []=  {"51211","51212","51202","51202"} ;
+    String stationNames []= {"Pearl Harbor","Barbers Point","Mokapu","Waimea"} ;
     String stationID, stationName ;
     MyBuoy (Handler h) {
         handler = h ;

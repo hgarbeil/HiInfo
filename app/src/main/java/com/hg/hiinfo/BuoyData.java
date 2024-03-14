@@ -8,7 +8,7 @@ public class BuoyData {
     String buoyString ;
     float height[] ;
     float dir[], domPeriod[], avgPeriod[] ;
-    String stationNames []= {"Barbers Point","Mokapu","Waimea"} ;
+    String stationNames []= {"Pearl Harbor","Barbers Point","Mokapu","Waimea"} ;
 
     BuoyData(String bstring){
         stationNum = 0 ;
