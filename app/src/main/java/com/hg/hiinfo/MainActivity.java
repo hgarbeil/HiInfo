@@ -97,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
                         Math.round(myWeatherData.cur_wind),Math.round(myWeatherData.cur_windDir));
                 tv_weather.setText(outstring);
                 outstring = String.format ("Sunrise : %s AM\nSunset : %s PM\nMoon Phase : %4.2f",
-                        sdf.format(new Date(myWeatherData.sunrise*1000L)),
-                        sdf.format(new Date(myWeatherData.sunset*1000L)),
+                        myWeatherData.sunrise,
+                        myWeatherData.sunset,
                         myWeatherData.moonphase) ;
                 tv_astro_1.setText(outstring);
 

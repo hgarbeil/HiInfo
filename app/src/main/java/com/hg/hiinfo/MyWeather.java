@@ -17,14 +17,18 @@ import java.net.URL;
 
 public class MyWeather implements Runnable {
     String myApiKey = BuildConfig.OW_APIKEY;
-    String fullURL;
-
+    String fullURL = "https://api.open-meteo.com/v1/forecast?wind_speed_unit=mph&timezone=auto&weather_code,precipitation_unit=inch&temperature_unit=fahrenheit&latitude=21.31&longitude=-157.858&current=precipitation,temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,wind_speed_10m_max,wind_direction_10m_dominant&timeformat=unixtime";
+    // String fullURL = "https://api.open-meteo.com/v1/forecast?wind_speed_unit=mph&timezone=auto&weather_code,precipitation_unit=inch&temperature_unit=fahrenheit&latitude=21.31&longitude=-157.858&current=precipitation,temperature_2m,relative_humidity_2m,cloud_cover,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,wind_speed_10m_max,wind_direction_10m_dominant";
     double lat, lon;
 
 
     public class DailyData {
         double min, max, wind_speed, wind_dir ;
-        public DailyData(){
+        public DailyData(float minT, float maxT, float windSp, float windDir){
+            min = minT ;
+            max = maxT ;
+            wind_dir = windDir ;
+            wind_speed = windSp ;
 
         }
 
@@ -34,7 +38,6 @@ public class MyWeather implements Runnable {
     public MyWeather(Handler h) {
         lat = 21.31;
         lon = -157.86;
-        fullURL = "";
         handler = h ;
     }
 
@@ -42,15 +45,15 @@ public class MyWeather implements Runnable {
     public MyWeather() {
         lat = 21.31;
         lon = -157.86;
-        fullURL = "";
+        // fullURL = "";
         dailyData = new DailyData[4];
     }
 
 
     public void makeURL() {
-        fullURL = String.format(
-                "https://api.openweathermap.org/data/2.5/onecall?lat=%f&lon=%f&units=imperial&exclude=hourly,minutely&appid=%s",
-                lat, lon, myApiKey);
+//        fullURL = String.format(
+//                "https://api.openweathermap.org/data/2.5/onecall?lat=%f&lon=%f&units=imperial&exclude=hourly,minutely&appid=%s",
+//                lat, lon, myApiKey);
         System.out.println(fullURL);
 
     }
@@ -64,10 +67,10 @@ public class MyWeather implements Runnable {
 
         try {
             con = (HttpURLConnection) (new URL(fullURL)).openConnection();
+            System.out.println(con.getResponseCode());
             con.setRequestMethod("GET");
-            con.setDoInput(true);
-            con.setDoOutput(true);
-            con.connect();
+            //          con.setDoOutput(true);
+//            con.connect();
             StringBuffer buffer = new StringBuffer();
             is = con.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
